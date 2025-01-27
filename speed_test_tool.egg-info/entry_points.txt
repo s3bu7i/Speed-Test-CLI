@@ -1,0 +1,2 @@
+[console_scripts]
+speed-test = speed_test_tool.main:main
