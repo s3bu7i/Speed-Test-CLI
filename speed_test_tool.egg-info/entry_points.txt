@@ -1,2 +1,2 @@
 [console_scripts]
-speed-test = speed_test_tool.main:main
+file-download = file_downloading_tool.cli:main

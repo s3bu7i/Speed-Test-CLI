@@ -1,0 +1,12 @@
+Source: mytool
+Section: utils
+Priority: optional
+Maintainer: Your Name sabuhi.gasimzada@gmail.com
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+Homepage: https://github.com/s3bu7i/Speed-Test-CLI
+
+Package: mytool
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A terminal-based application to test your internet speed, view historical results, and export them to a CSV file.
