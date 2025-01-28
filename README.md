@@ -27,6 +27,7 @@ A terminal-based application to test your internet speed, view historical result
 
 3. Run the application:
    ```bash
+   cd speed_test_tool
    python main.py
    ```
 

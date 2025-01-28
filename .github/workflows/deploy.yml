@@ -1,0 +1,26 @@
+name: Build and Release .deb Package
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build .deb package
+        run: |
+          dpkg-deb --build mytool/
+          mv mytool.deb ./dist/
+
+      - name: Upload .deb file as release asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./dist/mytool.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
