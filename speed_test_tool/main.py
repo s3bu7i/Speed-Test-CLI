@@ -136,16 +136,27 @@ def export_to_csv():
 
 
 def select_server(st):
-    servers = st.get_servers()
+    servers = st.get_servers()  # Retrieves servers as a nested dictionary
+    flat_servers = [
+        server for sublist in servers.values() for server in sublist
+    ]  # Flatten the nested server list
+
+    if not flat_servers:
+        console.print("[bold red]No servers available.[/bold red]")
+        return None
+
     console.print("[bold magenta]Available Servers:[/bold magenta]")
-    for i, server in enumerate(servers):
+    for i, server in enumerate(flat_servers):
         console.print(
-            f"[cyan]{i + 1}. {server['name']} ({server['country']})[/cyan]")
+            f"[cyan]{i + 1}. {server['sponsor']} ({server['name']}, {server['country']})[/cyan]"
+        )
     choice = console.input(
-        "[bold yellow]Select a server by number (or press Enter to auto-select): [/bold yellow]")
-    if choice.isdigit() and 0 < int(choice) <= len(servers):
-        return servers[int(choice) - 1]
+        "[bold yellow]Select a server by number (or press Enter to auto-select): [/bold yellow]"
+    )
+    if choice.isdigit() and 0 < int(choice) <= len(flat_servers):
+        return flat_servers[int(choice) - 1]
     return None
+
 
 
 def run_multiple_tests(num_tests):
@@ -172,9 +183,11 @@ def run_multiple_tests(num_tests):
 
 def speed_test():
     st = speedtest.Speedtest()
-    server = select_server(st)
-    if server:
-        st.get_servers([server])
+    selected_server = select_server(st)
+    if selected_server:
+        st.get_servers([selected_server['id']])
+    else:
+        st.get_best_server()
 
     with Progress(SpinnerColumn(), TextColumn("[bold cyan]Testing download speed...")) as progress:
         download_task = progress.add_task("download", total=100)
@@ -193,7 +206,6 @@ def speed_test():
         upload_speed, 2), round(ping, 2))
     return download_speed, upload_speed, ping
 
-
 def main_menu():
     console.clear()
     creative_welcome()
@@ -208,6 +220,7 @@ def main_menu():
 
         if choice == "1":
             animated_spinner()
+            
             speed_test()
         elif choice == "2":
             num_tests = int(console.input(
