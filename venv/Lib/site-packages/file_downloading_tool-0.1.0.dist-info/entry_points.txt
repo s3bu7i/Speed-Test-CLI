@@ -1,0 +1,2 @@
+[console_scripts]
+file-download = file_downloading_tool.cli:main
