@@ -115,6 +115,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Images
 
-Here are some screenshots of the game in action:
+Here are some screenshots of the tool:
 ![Mainmenu](img/1.png)
 ![Functions](img/2.png)
